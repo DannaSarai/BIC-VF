@@ -137,18 +137,35 @@ public class Enemy extends Entity {
     public int move(ArrayList<Entity> entities) {
         int x = this.getPositionX();
         int y = this.getPositionY();
-        y = this.direction == Direction.VERTICAL ? (canMove(x, y - this.groundUsed * 2 * this.forward, entities)
-                && canMoveIndestructible(x, y - this.groundUsed * 2 * this.forward, entities))
-                ? y - this.groundUsed * this.forward
-                : y + this.groundUsed * this.forward
-                : y;
-        x = this.direction == Direction.HORIZONTAL ? (canMove(x - this.groundUsed * 2 * this.forward, y, entities)
-                && canMoveIndestructible(x - this.groundUsed * 2 * this.forward, y, entities))
-                ? x - this.groundUsed * this.forward
-                : x + this.groundUsed * this.forward
-                : x;
+        x = calculateNewX(x, y, entities);
+        y = calculateNewY(x, y, entities);
         this.setPositionX(x);
         this.setPositionY(y);
         return 0;
     }
+    private int calculateNewX(int x, int y, ArrayList<Entity> entities) {
+        if (this.direction == Direction.HORIZONTAL) {
+            int targetX = x - this.groundUsed * 2 * this.forward;
+            if (canMove(targetX, y, entities) && canMoveIndestructible(targetX, y, entities)) {
+                return x - this.groundUsed * this.forward;
+            } else {
+                return x + this.groundUsed * this.forward;
+            }
+        }
+        return x;
+    }
+
+    private int calculateNewY(int x, int y, ArrayList<Entity> entities) {
+        if (this.direction == Direction.VERTICAL) {
+            int targetY = y - this.groundUsed * 2 * this.forward;
+            if (canMove(x, targetY, entities) && canMoveIndestructible(x, targetY, entities)) {
+                return y - this.groundUsed * this.forward;
+            } else {
+                return y + this.groundUsed * this.forward;
+            }
+        }
+        return y;
+    }
+
+
 }
