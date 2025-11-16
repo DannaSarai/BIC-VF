@@ -122,10 +122,13 @@ public class Enemy extends Entity {
         boolean isWithinEdgeBounds = x < this.groundUsed || y < this.groundUsed;
         boolean isOutsideEdgeBounds = x > this.mapLimitWidth - this.groundUsed * 2
                 || y > this.mapLimitHeight - this.groundUsed * 2;
-        this.forward = isWithinEdgeBounds ? -1 : isOutsideEdgeBounds ? 1 : this.forward;
+        if (isWithinEdgeBounds) {
+            this.forward = -1;
+        } else if (isOutsideEdgeBounds) {
+            this.forward = 1;
+        }
         return !(isWithinEdgeBounds || isOutsideEdgeBounds);
     }
-
 
 
     /**
