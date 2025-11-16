@@ -31,6 +31,11 @@ public class Enemy extends Entity {
     public int getLevelId() {
         return this.iD == 0 ? 4 : 5;
     }
+    private boolean checkBlock (int x, int y, Entity entity, Class <?> type) {
+        boolean found = type.isInstance(entity) && isSamePosition(x,y,entity);
+        this.forward *= found ? -1 : 1;
+        return found;
+    }
 
     /**
      * the method checks if the object is on an ice surface at the given coordinates
@@ -43,9 +48,7 @@ public class Enemy extends Entity {
      * coordinates or not.
      */
     private boolean checkIceBlock(int x, int y, Entity entity) {
-        boolean iceFound = entity instanceof IceBlock && isSamePosition(x, y, entity);
-        this.forward *= iceFound ? -1 : 1;
-        return iceFound;
+        return checkBlock(x,y,entity, IceBlock.class);
     }
 
     /**
@@ -59,9 +62,7 @@ public class Enemy extends Entity {
      * given coordinates or not.
      */
     private boolean checkIndestructibleBlock(int x, int y, Entity entity) {
-        boolean indestructibleFound = entity instanceof IndestructibleBlock && isSamePosition(x, y, entity);
-        this.forward *= indestructibleFound ? -1 : 1;
-        return indestructibleFound;
+        return checkBlock(x,y ,entity,IndestructibleBlock.class);
     }
 
     /**
@@ -124,6 +125,8 @@ public class Enemy extends Entity {
         this.forward = isWithinEdgeBounds ? -1 : isOutsideEdgeBounds ? 1 : this.forward;
         return !(isWithinEdgeBounds || isOutsideEdgeBounds);
     }
+
+
 
     /**
      * updates the coordinates of the object in the specified direction, provided
