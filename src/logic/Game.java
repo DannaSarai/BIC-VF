@@ -256,11 +256,9 @@ public class Game {
         int scoreAdjusted = this.score == this.currentLevel.getScore() ? this.adjustLevel() : 1;
         boolean isRunning = this.getRunning();
 
-        if (isRunning) {
-            if (this.currentLevelIndex > this.levelManager.getMaxLevel()) {
-                this.setLastLevelCompleted(false);
-                isRunning = false;
-            }
+        if (isRunning && this.currentLevelIndex > this.levelManager.getMaxLevel()) {
+            this.setLastLevelCompleted(false);
+            isRunning = false;
         }
         this.setRunning(isRunning);
         return scoreAdjusted;
