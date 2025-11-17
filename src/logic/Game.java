@@ -1,8 +1,5 @@
 package logic;
 
-import java.util.ArrayList;
-import java.awt.event.KeyEvent;
-
 import logic.entities.Entity;
 import logic.entities.IceCream;
 import logic.generators.EntityGenerator;
@@ -10,7 +7,9 @@ import logic.levels.Level;
 import logic.levels.LevelManager;
 import logic.results.Death;
 import logic.results.Points;
-import presentation.GameFrame;
+
+import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 
 public class Game {
 
