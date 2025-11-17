@@ -239,12 +239,11 @@ public class Game {
      * @return The next level.
      */
     private int adjustLevel() {
-        this.currentLevelIndex++;
-        this.currentLevelIndex = this.currentLevelIndex > this.levelManager.getMaxLevel()
-                ? this.levelManager.getMaxLevel() + 1
-                : this.currentLevelIndex;
-        int levelAdjusted = this.currentLevelIndex <= this.levelManager.getMaxLevel() ? this.restartGame() : 1;
-        return levelAdjusted;
+        if (this.currentLevelIndex > this.levelManager.getMaxLevel()) {
+            this.currentLevelIndex = this.levelManager.getMaxLevel + 1;
+        }
+
+        return this.currentLevelIndex <= this.levelManager.getMaxLevel() ? this.restartGame() : 1;
     }
 
     /**
