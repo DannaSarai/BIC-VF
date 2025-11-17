@@ -255,12 +255,12 @@ public class Game {
     public int checkScore() {
         int scoreAdjusted = this.score == this.currentLevel.getScore() ? this.adjustLevel() : 1;
         boolean isRunning = this.getRunning();
-        // This is doing nothing but replacing a simple if .-.
-        while (isRunning) {
-            isRunning = this.currentLevelIndex > this.levelManager.getMaxLevel()
-                    ? this.setLastLevelCompleted(false)
-                    : true;
-            break;
+
+        if (isRunning) {
+            if (this.currentLevelIndex > this.levelManager.getMaxLevel()) {
+                this.setLastLevelCompleted(false);
+                isRunning = false;
+            }
         }
         this.setRunning(isRunning);
         return scoreAdjusted;
