@@ -2,6 +2,7 @@ package logic.entities;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import logic.results.GameResult;
 import logic.results.None;
@@ -40,30 +41,17 @@ public class Entity extends BaseEntity {
      * @return a false or true variable depending on whether the entity is in the
      * given coordinates.
      */
-    protected boolean canMove(int x, int y, ArrayList<Entity> entities) {
+    protected boolean canMove(int x, int y, List<Entity> entities) {
         for (Entity entity : entities) {
-            return !(entity != null && isSamePosition(x, y, entity));
+            if (entity != null && isSamePosition(x, y, entity)) {
+                return false; // ¡Colisión detectada!
+            }
         }
         return this.withinBounds(x, y);
     }
 
-    /**
-     * the function goes through the list of entities and if the x and y coordinates
-     * are equal to the coordinate it returns false and cannot move, otherwise if it
-     * is not in the same coordinates it returns the function withinBounds (x,y),
-     * which
-     * indicates that it can move.
-     *
-     * @param x        position on x-axis
-     * @param y        position on y-axis
-     * @param entities a grouping or an entities array
-     * @return
-     */
-    protected boolean canMoveIndestructible(int x, int y, ArrayList<Entity> entities) {
-        for (Entity entity : entities) {
-            return !(entity != null && isSamePosition(x, y, entity));
-        }
-        return this.withinBounds(x, y);
+    protected boolean canMoveIndestructible(int x, int y, List<Entity> entities) {
+        return canMove(x, y, entities);
     }
 
     /**
@@ -95,7 +83,8 @@ public class Entity extends BaseEntity {
      * @param entities a list of entities
      * @return an integer indicating the movement status
      */
-    public int move(ArrayList<Entity> entities) {
+    // Acepta ArrayList, LinkedList, Vector, Stack... ¡cualquier lista!
+    public int move(List<Entity> entities) {
         return 0;
     }
 
@@ -106,7 +95,7 @@ public class Entity extends BaseEntity {
      * @param entities a list of entities
      * @return an integer indicating the movement status
      */
-    public int handleKeyEvent(KeyEvent e, ArrayList<Entity> entities) {
+    public int handleKeyEvent(KeyEvent e, List<Entity> entities) {
         return 0;
     }
 }

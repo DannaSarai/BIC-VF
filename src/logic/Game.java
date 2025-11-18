@@ -240,7 +240,7 @@ public class Game {
      */
     private int adjustLevel() {
         if (this.currentLevelIndex > this.levelManager.getMaxLevel()) {
-            this.currentLevelIndex = this.levelManager.getMaxLevel + 1;
+            this.currentLevelIndex = this.levelManager.getMaxLevel() + 1;
         }
 
         return this.currentLevelIndex <= this.levelManager.getMaxLevel() ? this.restartGame() : 1;
