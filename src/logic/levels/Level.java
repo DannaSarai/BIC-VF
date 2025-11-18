@@ -86,12 +86,28 @@ public class Level implements Serializable {
     private void setMap(int[][] map) {
         this.map = map;
         if (map != null) {
-            for (int[] ints : map) {
-                for (int tileValue : ints) {
-                    this.score += tileValue == 2 || tileValue == 3 ? 1 : 0;
-                    this.enemyCount += tileValue == 4 || tileValue == 5 ? 1 : 0;
-                }
+            processMapValues(map);
+        }
+    }
+
+    private void processMapValues(int[][] map) {
+        for (int[] row : map) {
+            for (int tileValue : row) {
+                updateScore(tileValue);
+                updateEnemyCount(tileValue);
             }
+        }
+    }
+
+    private void updateScore(int value) {
+        if (value == 2 || value == 3) {
+            this.score++;
+        }
+    }
+
+    private void updateEnemyCount(int value) {
+        if (value == 4 || value == 5) {
+            this.enemyCount++;
         }
     }
 

@@ -30,11 +30,6 @@ public class IceCream extends Entity {
     }
 
     @Override
-    public void setID(int iD) {
-        super.setID(iD);
-    }
-
-    @Override
     public int getLevelId() {
         return this.iD == 0 ? 6 : 7;
     }
@@ -70,9 +65,16 @@ public class IceCream extends Entity {
 
     @Override
     public GameResult handleCoalitions(Entity entity) {
-        return entity != null && isSamePosition(this.getPositionX(), this.getPositionY(), entity)
-                ? entity instanceof Enemy ? new Death() : entity instanceof Fruit ? new Points() : new None()
-                : new None();
+        if (entity == null || !isSamePosition(this.getPositionX(), this.getPositionY(), entity)) {
+            return new None();
+        }
+        if (entity instanceof Enemy) {
+            return new Death();
+        }
+        if (entity instanceof Fruit) {
+            return new Points();
+        }
+        return new None();
     }
 
     // CAMBIO: ArrayList -> List en métodos privados
